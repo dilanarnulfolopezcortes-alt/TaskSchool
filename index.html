@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskSchool</title>
+</head>
+<body>
+
+<h1>📚 TaskSchool</h1>
+
+<input type="text" id="tarea" placeholder="Nueva tarea">
+<button onclick="agregar()">Agregar</button>
+
+<ul id="lista"></ul>
+
+<script>
+function agregar() {
+    let tarea = document.getElementById("tarea").value;
+
+    fetch('http://localhost:3000/tareas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tarea })
+    });
+
+    mostrar();
+}
+
+function mostrar() {
+    fetch('http://localhost:3000/tareas')
+    .then(res => res.json())
+    .then(data => {
+        let lista = document.getElementById("lista");
+        lista.innerHTML = "";
+
+        data.forEach(t => {
+            lista.innerHTML += `<li>${t.tarea}</li>`;
+        });
+    });
+}
+
+mostrar();
+</script>
+
+</body>
+</html>
