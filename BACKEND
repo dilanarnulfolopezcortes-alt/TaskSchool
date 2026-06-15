@@ -1,0 +1,34 @@
+---
+
+# ⚡ server.js (BACKEND BÁSICO)
+
+```js
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+let tareas = [];
+
+app.get('/tareas', (req, res) => {
+    res.json(tareas);
+});
+
+app.post('/tareas', (req, res) => {
+    tareas.push(req.body);
+    res.send("Tarea creada");
+});
+
+app.put('/tareas/:id', (req, res) => {
+    tareas[req.params.id] = req.body;
+    res.send("Tarea actualizada");
+});
+
+app.delete('/tareas/:id', (req, res) => {
+    tareas.splice(req.params.id, 1);
+    res.send("Tarea eliminada");
+});
+
+app.listen(3000, () => {
+    console.log("Servidor corriendo en http://localhost:3000");
+});
